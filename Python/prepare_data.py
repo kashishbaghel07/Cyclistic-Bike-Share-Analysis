@@ -14,8 +14,14 @@ import pandas as pd
 # 1. Set the project folders
 # --------------------------------------------------
 
-# Find the folder where this Python script is saved.
-project_folder = Path(__file__).resolve().parent
+# Find the project folder
+script_folder = Path(__file__).resolve().parent
+
+# Support running from either the main folder or Python folder
+if (script_folder / "01_Raw_Data").exists():
+    project_folder = script_folder
+else:
+    project_folder = script_folder.parent
 
 raw_folder = project_folder / "01_Raw_Data"
 clean_folder = project_folder / "02_Cleaned_Data"
