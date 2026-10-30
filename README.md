@@ -238,7 +238,7 @@ The complete raw and cleaned datasets are not included in this repository becaus
 
 The script automatically creates the `02_Cleaned_Data` folder and saves the prepared dataset as `cyclistic_cleaned.csv`.
 
-**Note:** The Python script reads the original monthly CSV files from `01_Raw_Data`. The Excel Power Query preparation is documented as a separate part of the project's workflow. The complete raw and cleaned datasets are stored locally and are not included in this repository.
+**Note:** The Excel Power Query preparation was performed as part of the original project workflow. The Python script independently reads the original monthly CSV files and performs the documented data-cleaning operations. Running the Python script reproduces the Python cleaning stage; it does not reproduce the Excel Power Query transformations.
 
 The SQL analysis, dashboard preview, cleaned-data sample and final report are included in this repository to document the analysis and findings.
 
