@@ -27,23 +27,106 @@ The analysis focuses on:
 
 | Tool | Purpose |
 |---|---|
-| Microsoft Excel | Data inspection and preparation |
-| Python (Pandas) | Data cleaning and preparation |
-| MySQL | Data storage and SQL analysis |
-| Power BI | Interactive dashboard and visualization |
+| Microsoft Excel (Power Query) | Data import, transformation and initial preparation |
+| Python (Pandas) | Combining monthly files, removing duplicates and data cleaning |
+| MySQL | Data storage, validation and SQL analysis |
+| Power BI | Interactive dashboard and data visualization |
 
 ## 4. Project Workflow
 
+The project follows the six steps of the data analysis process.
+
 1. **Ask:** Define the business problem and analysis questions.
 2. **Prepare:** Collect and inspect the monthly Cyclistic trip-data files.
-3. **Process:** Clean duplicate records, calculate ride duration and prepare analysis columns using Python and Excel.
+3. **Process:** Prepare and clean the data using Excel Power Query and Python.
 4. **Analyze:** Use MySQL queries to compare rider behaviour and identify patterns.
 5. **Share:** Present findings through an interactive Power BI dashboard and final report.
 6. **Act:** Suggest marketing strategies based on the analysis.
 
-## 5. Key Findings
+## 5. Data Preparation and Cleaning
 
-### 5.1 Rides by Rider Type
+### 5.1 Initial Data Preparation using Excel Power Query
+
+Excel Power Query was used for the initial data preparation.
+
+The work included:
+
+- Importing and combining monthly Cyclistic CSV files.
+- Reviewing and selecting the required columns.
+- Renaming and transforming columns.
+- Changing data types where required.
+- Adding custom columns for analysis.
+- Applying filters and removing records with zero or negative ride durations.
+- Preparing the dataset for further analysis.
+
+### 5.2 Data Cleaning using Python
+
+Python and Pandas were used to combine the monthly CSV files and perform additional data cleaning.
+
+The Python script performs the following operations:
+
+1. Locates and reads the monthly CSV files.
+2. Combines all monthly files into one dataset.
+3. Checks the required columns.
+4. Removes duplicate ride IDs.
+5. Converts start and end timestamps into datetime format.
+6. Calculates ride duration in minutes.
+7. Removes zero or negative ride durations.
+8. Creates analysis columns:
+   - `day_of_week`
+   - `start_hour`
+   - `month`
+   - `day_type`
+9. Exports the cleaned dataset as `cyclistic_cleaned.csv`.
+
+### Python Cleaning Results
+
+| Cleaning Stage | Records |
+|---|---:|
+| Original records | 6,115,982 |
+| After duplicate removal | 6,115,947 |
+| After duration cleaning | 6,115,918 |
+
+- Duplicate ride IDs removed: **35**
+- Zero or negative duration records removed: **29**
+
+The final prepared dataset contained **6,115,918 records**.
+
+## 6. SQL Analysis using MySQL
+
+The cleaned dataset generated through Python was imported into MySQL for further analysis.
+
+The SQL analysis script is organized into 14 sections.
+
+### SQL Analysis Performed
+
+- Database and table creation.
+- Importing the cleaned CSV dataset.
+- Data exploration and validation.
+- Checking missing values and duplicate ride IDs.
+- Reviewing existing indexes and optional indexes.
+- Comparing casual riders and annual members.
+- Monthly, seasonal and hourly ride analysis.
+- Bike-type preference analysis.
+- Weekday and weekend comparisons.
+- Identifying the top 10 starting stations for each rider group.
+- Long-ride analysis and average-duration sensitivity.
+- Generating final summary results for the report.
+- Final validation of the reporting-period totals.
+
+The SQL queries include comments and explanations to make the analysis easier to understand.
+
+### Reporting Period
+
+The full prepared dataset contains 6,115,918 records, including 268 rides from August 2025.
+
+The main analysis covers **1 September 2025 to 31 August 2026**, excluding those 268 rides.
+
+Therefore, the reporting-period total is **6,115,650 rides**.
+
+## 7. Key Findings
+
+### 7.1 Rides by Rider Type
 
 | Rider Type | Total Rides | Percentage |
 |---|---:|---:|
@@ -51,7 +134,7 @@ The analysis focuses on:
 | Casual Riders | 2,160,116 | 35.32% |
 | **Total** | **6,115,650** | **100%** |
 
-### 5.2 Average Ride Duration
+### 7.2 Average Ride Duration
 
 | Rider Type | Average Duration |
 |---|---:|
@@ -60,34 +143,34 @@ The analysis focuses on:
 
 Casual riders take longer rides on average than annual members.
 
-### 5.3 Weekday and Weekend Usage
+### 7.3 Weekday and Weekend Usage
 
 - Casual riders have a higher weekend ride share of 37.26%.
 - Annual members have a weekend ride share of 23.34%.
-- Casual riders record their highest ride volume on Saturday.
-- Annual members record their highest ride volume on Wednesday.
+- Casual riders have a larger share of weekend rides than annual members.
 
-### 5.4 Monthly Trends
+### 7.4 Monthly Trends
 
 - Casual rider activity peaks in July.
 - Annual member activity peaks in August.
-- December records the lowest ride volume for both groups.
 
-### 5.5 Bike-Type Preference
+### 7.5 Bike-Type Preference
 
 Electric bikes are the most-used bike type for both rider groups.
 
 - Casual riders: 73.60% electric-bike share.
 - Annual members: 68.06% electric-bike share.
 
-### 5.6 Popular Starting Stations
+### 7.6 Popular Starting Stations
 
 - Most popular casual starting station: Navy Pier (51,740 rides).
 - Most popular member starting station: Canal St & Madison St (23,179 rides).
 
-## 6. Power BI Dashboard
+## 8. Power BI Dashboard
 
-The interactive dashboard presents:
+An interactive Power BI dashboard was created to present the analysis findings.
+
+The dashboard includes:
 
 - Total rides and key performance indicators.
 - Rider-type distribution.
@@ -100,9 +183,11 @@ The interactive dashboard presents:
 
 The dashboard includes slicers to explore the data by rider type, month and bike type.
 
+### Dashboard Preview
+
 ![Cyclistic Power BI Dashboard](Cyclistic_Dashboard.png)
 
-## 7. Business Recommendations
+## 9. Business Recommendations
 
 1. **Weekend Membership Campaigns:** Test membership promotions targeting casual riders during weekends.
 2. **Seasonal Campaigns:** Run membership campaigns during higher-activity months, especially spring and summer.
@@ -110,7 +195,7 @@ The dashboard includes slicers to explore the data by rider type, month and bike
 4. **Repeat Usage Analysis:** Study repeat casual usage if suitable privacy-safe data becomes available.
 5. **Measure Campaign Results:** Compare actual membership conversions before deciding which strategies are effective.
 
-## 8. Repository Structure
+## 10. Repository Structure
 
 ```text
 Cyclistic-Bike-Share-Analysis/
@@ -127,13 +212,13 @@ Cyclistic-Bike-Share-Analysis/
 └── README.md
 ```
 
-## 9. Data Source and Reproducibility
+## 11. Data Source and Reproducibility
 
 The original Cyclistic trip data is available from the [Divvy System Data website](https://divvybikes.com/system-data).
 
-The complete raw and cleaned datasets are not included in this repository because of their large file sizes. A 10,000-row cleaned sample is provided for preview.
+The complete raw and cleaned datasets are not included in this repository because of their large file sizes. A 10,000-row cleaned sample CSV is provided for preview.
 
-**To reproduce the data preparation:**
+### To reproduce the data preparation:
 
 1. Download the required monthly trip-data CSV files from the official source.
 2. Create a folder named `01_Raw_Data` in your local project folder.
@@ -153,9 +238,11 @@ The complete raw and cleaned datasets are not included in this repository becaus
 
 The script automatically creates the `02_Cleaned_Data` folder and saves the prepared dataset as `cyclistic_cleaned.csv`.
 
-The SQL analysis, dashboard preview, cleaned-data sample, and final report are included in this repository to document the analysis and findings.
+**Note:** The Python script reads the original monthly CSV files from `01_Raw_Data`. The Excel Power Query preparation is documented as a separate part of the project's workflow. The complete raw and cleaned datasets are stored locally and are not included in this repository.
 
-## 10. Limitations
+The SQL analysis, dashboard preview, cleaned-data sample and final report are included in this repository to document the analysis and findings.
+
+## 12. Limitations
 
 - Ride records do not represent unique customers.
 - The dataset does not explain why riders choose casual rides or annual memberships.
@@ -163,7 +250,7 @@ The SQL analysis, dashboard preview, cleaned-data sample, and final report are i
 - Long rides can influence average ride-duration calculations.
 - Marketing recommendations require further testing to measure actual membership conversions.
 
-## 11. Conclusion
+## 13. Conclusion
 
 This project helped me apply the complete data analytics workflow using Excel, Python, MySQL and Power BI.
 
